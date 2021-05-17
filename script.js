@@ -1,0 +1,1 @@
+// http://jservice.io/api/random
