@@ -5,7 +5,7 @@ function fetchQuizData(resource) {
 		.then(result => result)
 }
 
-function getCategoriesID() {
+function getCategoriesURL() {
 	let API_Resource = []
 	let random_categories_number = []
 
