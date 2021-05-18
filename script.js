@@ -1,3 +1,12 @@
+const answerForm = document.querySelector('.answer-form')
+const answerField = document.querySelector('#answerField')
+const categoriesWrapper = document.querySelector('.categories-wrapper')
+
+const showAnswerBtn = document.querySelector('.show-answer-btn')
+const nextQuestionBtn = document.querySelector('.next-question-btn')
+const submitAnswerBtn = document.querySelector('.submit-answer-btn')
+const changeCategoriesBtn = document.querySelector('.change-categories-btn')
+
 // return 5 random categories api endpoint from 1 - 200 categories
 function getCategoriesURL() {
 
@@ -35,7 +44,24 @@ function fetchQuizData() {
 }
 
 async function showCategories() {
-	const quizData = await fetchQuizData()
 
+	const quizData = await fetchQuizData()
+	const categoriesTitle = []
+	let str = `<p>Choose Category</p>`
+
+	// if fetchQuizData() is not returning undefined or null and is it true
+	// then it will get all titles and push it to categoriesTitle array
+
+	if (quizData !== undefined && quizData !== null) {
+		quizData.forEach(data => {
+			categoriesTitle.push(data.title)
+		})
+	} else return
+
+	// build category item element and injecting to html
+	categoriesTitle.forEach(title => {
+		str += `<li><button class="category-item"> ${title} </button></li>`
+	})
+	categoriesWrapper.insertAdjacentHTML('afterbegin', str)
 }
 showCategories()
