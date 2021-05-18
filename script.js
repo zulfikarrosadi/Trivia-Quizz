@@ -1,4 +1,6 @@
+// return 5 random categories api endpoint from 1 - 200 categories
 function getCategoriesURL() {
+
 	let APIResource = []
 	let randomCategoriesNumber = []
 	const TOTAL_CATEGORIES = 5
@@ -18,6 +20,7 @@ function getCategoriesURL() {
 	return APIResource
 }
 
+// getting quiz data based on random categories url
 function fetchQuizData() {
 	let quizURL = [...getCategoriesURL()]
 
