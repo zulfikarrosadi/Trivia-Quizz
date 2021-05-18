@@ -37,9 +37,11 @@ function fetchQuizData() {
 	// then turn the result to json and put it on array
 
 	let fetchQuizArray = quizURL.map(async (url) => {
-		return await fetch(url).then(response => response.json())
+		return await fetch(url).then(response => {
+			if (response.status !== 200) throw new Error('data not found')
+			return response.json()
+		})
 	})
-
 	return Promise.all(fetchQuizArray).then(results => results)
 }
 
