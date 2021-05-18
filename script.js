@@ -1,7 +1,12 @@
 const answerForm = document.querySelector('.answer-form')
 const answerField = document.querySelector('#answerField')
+const injectStartPoin = document.querySelector('.categories-wrapper p')
 const categoriesWrapper = document.querySelector('.categories-wrapper')
 
+let categoriesListItem
+let quizData
+
+const startBtn = document.querySelector('.start-game-btn')
 const showAnswerBtn = document.querySelector('.show-answer-btn')
 const nextQuestionBtn = document.querySelector('.next-question-btn')
 const submitAnswerBtn = document.querySelector('.submit-answer-btn')
@@ -42,14 +47,20 @@ function fetchQuizData() {
 			return response.json()
 		})
 	})
-	return Promise.all(fetchQuizArray).then(results => results)
+	return Promise.all(fetchQuizArray)
+		.then(results => results)
+		.catch(error => error)
 }
 
-async function showCategories() {
+async function getQuizData() {
+	quizData = await fetchQuizData()
+}
+getQuizData()
 
-	const quizData = await fetchQuizData()
+function showCategories() {
+
 	const categoriesTitle = []
-	let str = `<p>Choose Category</p>`
+	let str = ``
 
 	// if fetchQuizData() is not returning undefined or null and is it true
 	// then it will get all titles and push it to categoriesTitle array
@@ -64,6 +75,23 @@ async function showCategories() {
 	categoriesTitle.forEach(title => {
 		str += `<li><button class="category-item"> ${title} </button></li>`
 	})
-	categoriesWrapper.insertAdjacentHTML('afterbegin', str)
+	injectStartPoin.insertAdjacentHTML('beforeend', str)
+	categoriesListItem = document.querySelectorAll('.category-item')
 }
-showCategories()
+
+startBtn.addEventListener('click', async () => {
+
+	startBtn.classList.add('hidden')
+	changeCategoriesBtn.classList.remove('hidden')
+	injectStartPoin.classList.remove('hidden')
+
+	await showCategories()
+
+	categoriesListItem.forEach(item => {
+		item.addEventListener('click', showQuestion)
+	})
+})
+
+function showQuestion() {
+	console.log(quizData)
+}
