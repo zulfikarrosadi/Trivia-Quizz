@@ -1,5 +1,6 @@
 const answerForm = document.querySelector('.answer-form')
 const answerField = document.querySelector('#answerField')
+const questionWrapper = document.querySelector('.question-wrapper')
 const injectStartPoin = document.querySelector('.categories-wrapper p')
 const categoriesWrapper = document.querySelector('.categories-wrapper')
 
@@ -92,6 +93,26 @@ startBtn.addEventListener('click', async () => {
 	})
 })
 
-function showQuestion() {
-	console.log(quizData)
+function showQuestion(event) {
+	const categoriesTitle = event.target.innerText
+
+	// will filled by whatever quiz category data that user has been choosed
+	let choosenQuizData
+	let questionStr = ''
+
+	// to find which category that user is choosing 
+	// and pass the result to choosenQuizData variable
+	quizData.forEach((items) => {
+		if (items.title.includes(categoriesTitle)) {
+			choosenQuizData = items.clues
+		}
+	})
+
+	// build question html element
+	choosenQuizData.forEach(items => {
+		const question = items.question
+		questionStr += `<p>${question}</p>`
+	})
+
+	// questionWrapper.insertAdjacentHTML('afterbegin', questionStr)
 }
