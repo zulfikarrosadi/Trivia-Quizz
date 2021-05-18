@@ -20,9 +20,12 @@ function getCategoriesURL() {
 	return APIResource
 }
 
-// getting quiz data based on random categories url
+// get quiz data based on random categories url
 function fetchQuizData() {
 	let quizURL = [...getCategoriesURL()]
+
+	// fetching each diffrent quiz url
+	// then turn the result to json and put it on array
 
 	let fetchQuizArray = quizURL.map(async (url) => {
 		return await fetch(url).then(response => response.json())
